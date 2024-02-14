@@ -12,7 +12,7 @@ variable "ZONE" {
 
 variable "GCP_CRED_PATH" {
   type        = string
-  default     = "F:/NEU/Cloud/assignments/Java/csye6225-tf-gcp-infra-b2e7c205dc81.json"
+  default     = ""
   description = "Credentials path of the infrastructure"
 }
 
