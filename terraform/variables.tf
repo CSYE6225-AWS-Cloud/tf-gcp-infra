@@ -56,13 +56,13 @@ variable "ROUTE" {
   type = list(object({
     name       = string
     dest_range = string
-    tags       = list(string)
+    tags       = string
   }))
   default = [
     {
       name       = "webapp-route"
       dest_range = "0.0.0.0/0"
-      tags       = ["webapp"]
+      tags       = "webapp"
     }
   ]
   description = "VPC route configs"

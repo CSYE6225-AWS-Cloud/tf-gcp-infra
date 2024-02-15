@@ -16,10 +16,12 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_route" "route" {
-  count            = var.VPC_COUNT
-  name             = var.VPC_COUNT == 1 ? var.ROUTE[0].name : "${var.ROUTE[0].name}-${count.index}"
+  count            = var.VPC_COUNT * length(var.SUBNET)
+  name             = var.VPC_COUNT == 1 ? var.ROUTE[0].name : "${var.ROUTE[0].name}-${floor(count.index / length(var.SUBNET))}${count.index%length(var.SUBNET)}"
   dest_range       = var.ROUTE[0].dest_range
   next_hop_gateway = "default-internet-gateway"
-  network          = google_compute_network.vpc[count.index].id
-  tags             = var.ROUTE[0].tags
+  network          = google_compute_network.vpc[floor(count.index / length(var.SUBNET))].id
+  tags             = var.VPC_COUNT == 1 ? [var.ROUTE[0].tags] : [
+    "${var.ROUTE[0].tags}-${floor(count.index / length(var.SUBNET))}${count.index%length(var.SUBNET)}"
+  ]
 }
