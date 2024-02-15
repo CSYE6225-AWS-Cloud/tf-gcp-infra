@@ -10,6 +10,12 @@ variable "ZONE" {
   description = "Zone in the Region to create the infrastructure"
 }
 
+variable "VPC_COUNT" {
+  type        = number
+  default     = 1
+  description = "Number of VPCs to create"
+}
+
 variable "GCP_CRED_PATH" {
   type        = string
   default     = ""

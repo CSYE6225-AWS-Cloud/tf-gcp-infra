@@ -1,24 +1,25 @@
 resource "google_compute_network" "vpc" {
-  name                            = "${var.PROJECT}-vpc"
-  description                     = var.VPC_DESC
+  count                           = var.VPC_COUNT
+  name                            = "${var.PROJECT}-vpc-${count.index}"
+  description                     = "${var.VPC_DESC}-${count.index}"
   auto_create_subnetworks         = false
   routing_mode                    = "REGIONAL"
   delete_default_routes_on_create = true
 }
 
 resource "google_compute_subnetwork" "subnet" {
-  count = length(var.SUBNET)
-  ip_cidr_range = var.SUBNET[count.index].ip_cidr_range
-  name          = var.SUBNET[count.index].name
-  network       = google_compute_network.vpc.id
+  count         = var.VPC_COUNT * length(var.SUBNET)
+  ip_cidr_range = var.SUBNET[count.index%length(var.SUBNET)].ip_cidr_range
+  name          = var.VPC_COUNT == 1 ? var.SUBNET[count.index%length(var.SUBNET)].name : "${var.SUBNET[count.index%length(var.SUBNET)].name}-${floor(count.index / length(var.SUBNET))}${count.index%length(var.SUBNET)}"
+  network       = google_compute_network.vpc[floor(count.index / length(var.SUBNET))].id
   region        = var.REGION
 }
 
 resource "google_compute_route" "route" {
-  count = length(var.ROUTE)
-  name             = var.ROUTE[count.index].name
-  dest_range       = var.ROUTE[count.index].dest_range
+  count            = var.VPC_COUNT
+  name             = var.VPC_COUNT == 1 ? var.ROUTE[0].name : "${var.ROUTE[0].name}-${count.index}"
+  dest_range       = var.ROUTE[0].dest_range
   next_hop_gateway = "default-internet-gateway"
-  network          = google_compute_network.vpc.id
-  tags             = var.ROUTE[count.index].tags
+  network          = google_compute_network.vpc[count.index].id
+  tags             = var.ROUTE[0].tags
 }
