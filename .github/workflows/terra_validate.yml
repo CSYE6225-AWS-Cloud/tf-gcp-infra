@@ -18,7 +18,9 @@ jobs:
           terraform_version: 1.7.3
 
       - name: Initialize terraform
-        run: terraform init
+        run: |
+          cd terraform
+          terraform init
 
       - name: Validate terraform
-        run: terraform validate
+        run:  terraform validate

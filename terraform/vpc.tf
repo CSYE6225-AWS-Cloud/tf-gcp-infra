@@ -16,7 +16,7 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_route" "route" {
-  count            = var.VPC_COUNT * length(var.SUBNET)
+  count            = var.VPC_COUNT
   name             = var.VPC_COUNT == 1 ? var.ROUTE[0].name : "${var.ROUTE[0].name}-${floor(count.index / length(var.SUBNET))}${count.index%length(var.SUBNET)}"
   dest_range       = var.ROUTE[0].dest_range
   next_hop_gateway = "default-internet-gateway"
