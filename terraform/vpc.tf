@@ -178,19 +178,3 @@ resource "google_compute_instance" "webapp_instance" {
 
   metadata_startup_script = data.template_file.startup_script[count.index].rendered
 }
-
-resource "google_compute_firewall" "internal_ssh_conf" {
-  count       = var.VPC_COUNT
-  name        = "${var.PROJECT}-firewall-internal-ssh-${count.index}"
-  network     = google_compute_network.vpc[count.index].id
-  direction   = var.FIREWALL_INGRESS
-  priority    = var.ALLOW_APP_PORT_FIREWALL_PRIORITY
-  target_tags = var.VPC_COUNT == 1 ? [var.WEBAPP_CONST] : (count.index == 0? [var.WEBAPP_CONST] : [
-    "${var.WEBAPP_CONST}-${count.index}"
-  ])
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-  source_ranges = ["35.235.240.0/20"]
-}
