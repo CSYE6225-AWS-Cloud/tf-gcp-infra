@@ -141,3 +141,71 @@ variable "DB_CIDR_RANGE" {
   default     = "10.0.1.0/24"
   description = "DB subnet cidr range"
 }
+
+variable "SERVICE_NETWORK_API" {
+  type = string
+  default = "servicenetworking.googleapis.com"
+  description = "Private service networking access - url"
+}
+
+variable "DATABASE_VERSION" {
+  type = string
+  default = "MYSQL_8_0"
+  description = "Database version for DB instance"
+}
+
+variable "DATABASE_TIER" {
+  type = string
+  default = "db-custom-1-3840"
+  description = "Database vm instance tier"
+}
+
+variable "DATABASE_AVAILABILITY_TYPE" {
+  type = string
+  default = "REGIONAL"
+  description = "Database availability type"
+}
+
+variable "DATABASE_DISK_SIZE" {
+  type = number
+  default = 100
+  description = "Database disk size"
+}
+
+variable "DATABASE_DISK_TYPE" {
+  type = string
+  default = "PD_SSD"
+  description = "Database disk type - hdd/ssd"
+}
+
+variable "DB_GLOBAL_ADDRESS_PURPOSE" {
+  type = string
+  default = "VPC_PEERING"
+  description = "Database global compute address purpose"
+}
+
+variable "DB_GLOBAL_ADDRESS_CIDR_PREFIX" {
+  type = number
+  default = 24
+  description = "Database global compute address cidr prefix"
+}
+
+variable "DB_GLOBAL_ADDRESS_TYPE" {
+  type = string
+  default = "INTERNAL"
+  description = "Database global compute address type"
+}
+
+variable "RANDOM_PASS_LEN" {
+  type=number
+  default = 16
+  description = "Database random password length"
+}
+
+variable "RANDOM_PASS_SPL_CHARS" {
+  type = string
+  default = "!#$%&*()-_=+[]{}<>:?"
+  description = "Database random password special characters"
+}
+
+
