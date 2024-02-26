@@ -40,6 +40,7 @@ resource "google_compute_firewall" "sql_access" {
   name      = "allow-sql-access-${count.index}"
   network   = google_compute_network.vpc[count.index].id
   direction = var.FIREWALL_INGRESS
+  priority  = var.ALLOW_APP_PORT_FIREWALL_PRIORITY
 
   allow {
     protocol = "tcp"
@@ -52,6 +53,23 @@ resource "google_compute_firewall" "sql_access" {
   source_ranges = [
     google_compute_instance.webapp_instance[count.index].network_interface.0.network_ip
   ]
+  destination_ranges = [
+    google_sql_database_instance.database_instance[count.index].first_ip_address
+  ]
+}
+
+resource "google_compute_firewall" "deny_sql_access" {
+  count     = var.VPC_COUNT
+  name      = "deny-sql-access-${count.index}"
+  network   = google_compute_network.vpc[count.index].id
+  direction = var.FIREWALL_INGRESS
+  priority  = var.DENY_ALL_PORT_FIREWALL_PRIORITY
+
+  deny {
+    protocol = "tcp"
+  }
+
+  source_ranges      = [var.FULL_INTERNET_RANGE]
   destination_ranges = [
     google_sql_database_instance.database_instance[count.index].first_ip_address
   ]

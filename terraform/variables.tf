@@ -16,6 +16,12 @@ variable "VPC_COUNT" {
   description = "Number of VPCs to create"
 }
 
+variable "VPC_NAME" {
+  type = string
+  default = "csye6225-vpc"
+  description = "VPC Name"
+}
+
 variable "PROJECT" {
   type        = string
   default     = "csye6225-dev-415001"
@@ -200,12 +206,6 @@ variable "RANDOM_PASS_LEN" {
   type        = number
   default     = 16
   description = "Database random password length"
-}
-
-variable "RANDOM_PASS_SPL_CHARS" {
-  type        = string
-  default     = "!#$%&*()-_=+[]{}<>:?"
-  description = "Database random password special characters"
 }
 
 variable "DATABASE_PORT" {

@@ -48,8 +48,7 @@ resource "google_compute_global_address" "db_private_ip" {
 
 resource "random_password" "password" {
   length           = var.RANDOM_PASS_LEN
-  special          = true
-  override_special = var.RANDOM_PASS_SPL_CHARS
+  special          = false
 }
 
 resource "google_sql_user" "users" {

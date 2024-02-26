@@ -1,6 +1,6 @@
 resource "google_compute_network" "vpc" {
   count                           = var.VPC_COUNT
-  name                            = "${var.PROJECT}-vpcd-${count.index}"
+  name                            = "${var.VPC_NAME}-${count.index}"
   description                     = "${var.VPC_DESC}-${count.index}"
   auto_create_subnetworks         = false
   routing_mode                    = var.ROUTING_MODE
