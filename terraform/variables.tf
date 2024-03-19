@@ -17,8 +17,8 @@ variable "VPC_COUNT" {
 }
 
 variable "VPC_NAME" {
-  type = string
-  default = "csye6225-vpc"
+  type        = string
+  default     = "csye6225-vpc"
   description = "VPC Name"
 }
 
@@ -212,4 +212,58 @@ variable "DATABASE_PORT" {
   type        = string
   default     = "3306"
   description = "Cloud SQL database port"
+}
+
+variable "LOGGER_SERVICE_ACCOUNTID" {
+  type        = string
+  default     = "csye6225-logging"
+  description = "Service account id for logger service VM attach"
+}
+
+variable "LOGGER_SERVICE_ACCOUNT_DISPLAY_NAME" {
+  type        = string
+  default     = "CSYE6225 Application logging"
+  description = "Service account display name for logger service VM attach"
+}
+
+variable "LOGGING_ADMIN_ROLE" {
+  type        = string
+  default     = "roles/logging.admin"
+  description = "Service account logging admin role"
+}
+
+variable "MONITORING_ROLE" {
+  type        = string
+  default     = "roles/monitoring.metricWriter"
+  description = "Service account Monitoring metric writer role"
+}
+
+variable "VM_SERVICE_ACCOUNT_SCOPES" {
+  type        = list(string)
+  default     = ["logging-write", "monitoring-write"]
+  description = "VM Instance service account scopes"
+}
+
+variable "DNS_A_RECORD_NAME" {
+  type        = string
+  default     = "gokulakrishnanr.me."
+  description = "DNS Name"
+}
+
+variable "A_RECORD" {
+  type        = string
+  default     = "A"
+  description = "A Record"
+}
+
+variable "DNS_TTL" {
+  type        = number
+  default     = 60
+  description = "DNS Time to live"
+}
+
+variable "DNS_MANAGED_ZONE_NAME" {
+  type        = string
+  default     = "csye6225"
+  description = "DNS Managed zone name"
 }

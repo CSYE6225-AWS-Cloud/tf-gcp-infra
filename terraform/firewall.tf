@@ -69,7 +69,7 @@ resource "google_compute_firewall" "deny_sql_access" {
     protocol = "tcp"
   }
 
-  source_ranges      = [var.FULL_INTERNET_RANGE]
+  source_ranges = [var.FULL_INTERNET_RANGE]
   destination_ranges = [
     google_sql_database_instance.database_instance[count.index].first_ip_address
   ]

@@ -47,8 +47,8 @@ resource "google_compute_global_address" "db_private_ip" {
 }
 
 resource "random_password" "password" {
-  length           = var.RANDOM_PASS_LEN
-  special          = false
+  length  = var.RANDOM_PASS_LEN
+  special = false
 }
 
 resource "google_sql_user" "users" {
