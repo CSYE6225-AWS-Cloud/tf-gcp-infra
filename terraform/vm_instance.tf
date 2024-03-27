@@ -10,40 +10,15 @@ data "template_file" "startup_script" {
   }
 }
 
-resource "google_service_account" "logger_account" {
-  count        = var.VPC_COUNT
-  account_id   = "${var.LOGGER_SERVICE_ACCOUNTID}-${count.index}"
-  display_name = "${var.LOGGER_SERVICE_ACCOUNT_DISPLAY_NAME}-${count.index}"
-}
-
-resource "google_project_iam_binding" "logging_admin_binding" {
-  count   = var.VPC_COUNT
-  project = var.PROJECT
-  role    = var.LOGGING_ADMIN_ROLE
-
-  members = [
-    "serviceAccount:${google_service_account.logger_account[count.index].email}"
-  ]
-}
-
-resource "google_project_iam_binding" "monitoring_metric_writer_binding" {
-  count   = var.VPC_COUNT
-  project = var.PROJECT
-  role    = var.MONITORING_ROLE
-
-  members = [
-    "serviceAccount:${google_service_account.logger_account[count.index].email}"
-  ]
-}
-
 resource "google_compute_instance" "webapp_instance" {
-  count        = var.VPC_COUNT
-  name         = "${var.VM_WEBAPP_NAME}-${count.index}"
-  machine_type = var.VM_MACHINE_TYPE
-  description  = "${var.VM_INSTANCE_DESC}-${count.index}"
+  count                     = var.VPC_COUNT
+  name                      = "${var.VM_WEBAPP_NAME}-${count.index}"
+  machine_type              = var.VM_MACHINE_TYPE
+  description               = "${var.VM_INSTANCE_DESC}-${count.index}"
+  allow_stopping_for_update = true
   tags = var.VPC_COUNT == 1 ? [var.WEBAPP_CONST] : (count.index == 0 ? [
     var.WEBAPP_CONST
-    ] : [
+  ] : [
     "${var.WEBAPP_CONST}-${count.index}"
   ])
 

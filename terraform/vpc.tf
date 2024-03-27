@@ -24,6 +24,23 @@ resource "google_compute_subnetwork" "db" {
   private_ip_google_access = true
 }
 
+resource "google_compute_subnetwork" "serverless" {
+  count         = var.VPC_COUNT
+  ip_cidr_range = var.SERVERLESS_CIDR_RANGE
+  name          = var.VPC_COUNT == 1 ? var.SERVERLESS_CONST : (count.index == 0 ? var.SERVERLESS_CONST : "${var.SERVERLESS_CONST}-${count.index}")
+  network       = google_compute_network.vpc[count.index].id
+  region        = var.REGION
+}
+
+resource "google_vpc_access_connector" "connector" {
+  count = var.VPC_COUNT
+  name  = var.VPC_CONNECTOR_NAME
+  subnet {
+    name = google_compute_subnetwork.serverless[count.index].name
+  }
+  machine_type = var.VPC_CONNECTOR_MACHINE_TYPE
+}
+
 resource "google_compute_route" "route" {
   count            = var.VPC_COUNT
   name             = var.VPC_COUNT == 1 ? "${var.WEBAPP_CONST}-route" : (count.index == 0 ? "${var.WEBAPP_CONST}-route" : "${var.WEBAPP_CONST}-route-${count.index}")
@@ -32,7 +49,7 @@ resource "google_compute_route" "route" {
   network          = google_compute_network.vpc[count.index].id
   tags = var.VPC_COUNT == 1 ? [var.WEBAPP_CONST] : (count.index == 0 ? [
     var.WEBAPP_CONST
-    ] : [
+  ] : [
     "${var.WEBAPP_CONST}-${count.index}"
   ])
 }

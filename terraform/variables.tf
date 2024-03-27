@@ -174,7 +174,7 @@ variable "DATABASE_AVAILABILITY_TYPE" {
 
 variable "DATABASE_DISK_SIZE" {
   type        = number
-  default     = 100
+  default     = 10
   description = "Database disk size"
 }
 
@@ -240,7 +240,7 @@ variable "MONITORING_ROLE" {
 
 variable "VM_SERVICE_ACCOUNT_SCOPES" {
   type        = list(string)
-  default     = ["logging-write", "monitoring-write"]
+  default     = ["logging-write", "monitoring-write", "pubsub"]
   description = "VM Instance service account scopes"
 }
 
@@ -266,4 +266,126 @@ variable "DNS_MANAGED_ZONE_NAME" {
   type        = string
   default     = "csye6225"
   description = "DNS Managed zone name"
+}
+
+variable "SERVERLESS_CONST" {
+  type        = string
+  default     = "serverless"
+  description = "serverless all constant"
+}
+
+variable "MAILGUN_API_KEY" {
+  type        = string
+  description = "Mailgun api key"
+}
+
+variable "SENDER_DOMAIN" {
+  type        = string
+  default     = "gokulakrishnanr.me"
+  description = "Sender domain"
+}
+
+variable "VERIFY_EMAIL_FUNC_NAME" {
+  type        = string
+  default     = "verify-email-function"
+  description = "Verify email function name"
+}
+
+variable "VERIFY_EMAIL_FUNC_DESC" {
+  type        = string
+  default     = "Spring Cloud Function to send user verification email"
+  description = "Verify email function description"
+}
+
+variable "FUNCTION_RUNTIME_JAVA" {
+  type        = string
+  default     = "java17"
+  description = "Cloud serverless function runtime type - java"
+}
+
+variable "VERIFY_EMAIL_FUNCTION_ENTRY" {
+  type        = string
+  default     = "com.neu.csye6225.cloud.functions.VerificationEmailFunction"
+  description = "Verify email function java entry point class"
+}
+
+variable "VERIFY_EMAIL_FUNCTION_AVAILABLE_MEMORY" {
+  type        = string
+  default     = "256M"
+  description = "Verify email function memory"
+}
+
+variable "VERIFY_FUNCTION_TIMEOUT" {
+  type    = number
+  default = 60
+}
+
+variable "VERIFY_FUNCTION_INGRESS" {
+  type    = string
+  default = "ALLOW_INTERNAL_ONLY"
+}
+
+variable "VERIFY_FUNCTION_EVENT_TYPE" {
+  type    = string
+  default = "google.cloud.pubsub.topic.v1.messagePublished"
+}
+
+variable "FUNCTION_ARCHIVE_NAME" {
+  type    = string
+  default = "serverless-0.0.1-SNAPSHOT-jar-with-dependencies.zip"
+}
+
+variable "FUNCTION_ARCHIVE_LOCAL_PATH" {
+  type    = string
+  default = "F:/NEU/Cloud/assignments/Java/serverless-fork/target/serverless-0.0.1-SNAPSHOT-jar-with-dependencies.zip"
+}
+
+variable "ROLE_CLOUD_FUNCTION_INVOKER" {
+  type    = string
+  default = "roles/cloudfunctions.invoker"
+}
+
+variable "STORAGE_BUCKET_LOCATION" {
+  type    = string
+  default = "US"
+}
+
+variable "VERIFY_EMAIL_TOPIC_NAME" {
+  type    = string
+  default = "verify_email"
+}
+
+variable "VERIFY_EMAIL_TOPIC_RETENTION_DURATION" {
+  type    = string
+  default = "604800s"
+}
+
+variable "ROLE_PUBSUB_PUBLISHER" {
+  type    = string
+  default = "roles/pubsub.publisher"
+}
+
+variable "VERIFY_EMAIL_SUBSCRIPTION_NAME" {
+  type    = string
+  default = "verify-email-subscription"
+}
+
+variable "ROLE_PUBSUB_SUBSCRIBER" {
+  type    = string
+  default = "roles/pubsub.subscriber"
+}
+
+variable "SERVERLESS_CIDR_RANGE" {
+  type    = string
+  default = "10.0.2.0/28"
+}
+
+variable "VPC_CONNECTOR_NAME" {
+  type    = string
+  default = "vpc-con"
+}
+
+variable "VPC_CONNECTOR_MACHINE_TYPE" {
+  type    = string
+  default = "f1-micro"
 }
