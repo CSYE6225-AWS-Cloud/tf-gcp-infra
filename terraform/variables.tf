@@ -18,7 +18,7 @@ variable "VPC_COUNT" {
 
 variable "VPC_NAME" {
   type        = string
-  default     = "csye6225-vpc"
+  default     = "csye6225-vpc-network"
   description = "VPC Name"
 }
 
@@ -42,7 +42,7 @@ variable "ROUTING_MODE" {
 
 variable "IMAGE" {
   type        = string
-  default     = "webapp-20240221174909"
+  default     = "webapp-20240327130821"
   description = "Custom webapp image name"
 }
 
@@ -388,4 +388,107 @@ variable "VPC_CONNECTOR_NAME" {
 variable "VPC_CONNECTOR_MACHINE_TYPE" {
   type    = string
   default = "f1-micro"
+}
+
+variable "AUTOSCALER_NAME" {
+  type    = string
+  default = "webapp-autoscaler"
+}
+
+variable "AUTOSCALER_MAX_REPLICAS" {
+  type    = number
+  default = 2
+}
+
+variable "AUTOSCALER_MIN_REPLICAS" {
+  type    = number
+  default = 1
+}
+
+variable "HEALTH_CHECK_TIMEOUT" {
+  type    = number
+  default = 20
+}
+variable "HEALTH_CHECK_INTERVAL" {
+  type    = number
+  default = 30
+}
+variable "HEALTH_CHECK_REQUEST_PATH" {
+  type    = string
+  default = "/healthz"
+}
+variable "AUTOSCALER_CPU_UTILIZATION" {
+  type    = number
+  default = 0.05
+}
+variable "HEALTH_CHECK_NAME" {
+  type    = string
+  default = "http-health-check"
+}
+variable "GROUP_MANAGER_NAME" {
+  type    = string
+  default = "webapp-igm"
+}
+variable "GROUP_BASE_INSTANCE_NAME" {
+  type    = string
+  default = "webapp"
+}
+variable "GROUP_MANAGER_AUTOHEALING_INITIAL_DELAY" {
+  type    = number
+  default = 300
+}
+variable "LB_URL_MAP_NAME" {
+  type    = string
+  default = "l7-xlb-url-map"
+}
+variable "LB_HTTPS_PROXY" {
+  type    = string
+  default = "lb-https-proxy"
+}
+variable "LB_SSL_CERTIFICATE" {
+  type    = string
+  default = "projects/csye6225-dev-415001/global/sslCertificates/csye6225-gokulakrishnanr"
+}
+variable "LB_FORWARDING_RULE_NAME" {
+  type    = string
+  default = "l7-xlb-forwarding-rule"
+}
+variable "LB_LOAD_BALANCING_SCHEME" {
+  type    = string
+  default = "EXTERNAL"
+}
+variable "LB_FORWARDING_PORT" {
+  type    = string
+  default = "443"
+}
+variable "LB_BACKEND_SERVICE_NAME" {
+  type    = string
+  default = "l7-xlb-backend-service"
+}
+variable "LB_BACKEND_SERVICE_PROTOCOL" {
+  type    = string
+  default = "HTTP"
+}
+variable "LB_BACKEND_SERVICE_TIMEOUT" {
+  type    = number
+  default = 10
+}
+variable "LB_BACKEND_SERVICE_BALANCING_MODE" {
+  type    = string
+  default = "UTILIZATION"
+}
+
+variable "LB_BACKEND_SERVICE_CAPACITY_SCALER" {
+  type    = number
+  default = 1.0
+}
+
+variable "LB_GLOBAL_ADDRESS_NAME" {
+  type    = string
+  default = "l7-xlb-static-ip"
+}
+
+variable "LB_HEALTH_CHECK_RANGES" {
+  type    = list(string)
+  default = ["130.211.0.0/22", "35.191.0.0/16"]
 }

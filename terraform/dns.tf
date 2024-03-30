@@ -5,6 +5,6 @@ resource "google_dns_record_set" "application" {
   ttl          = var.DNS_TTL
   managed_zone = var.DNS_MANAGED_ZONE_NAME
   rrdatas = [
-    google_compute_instance.webapp_instance[count.index].network_interface[0].access_config[0].nat_ip
+    google_compute_global_address.webapp_global_address.address
   ]
 }
