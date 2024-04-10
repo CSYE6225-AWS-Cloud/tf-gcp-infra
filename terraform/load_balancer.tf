@@ -4,7 +4,7 @@ resource "google_compute_global_address" "webapp_global_address" {
 
 resource "google_compute_global_forwarding_rule" "webapp_forwarding_rule" {
   name                  = var.LB_FORWARDING_RULE_NAME
-  load_balancing_scheme = var.LB_LOAD_BALANCING_SCHEME //TODO
+  load_balancing_scheme = var.LB_LOAD_BALANCING_SCHEME
   port_range            = var.LB_FORWARDING_PORT
   target                = google_compute_target_https_proxy.webapp_https_proxy.id
   ip_address            = google_compute_global_address.webapp_global_address.id
@@ -49,6 +49,7 @@ resource "google_compute_region_autoscaler" "webapp_autoscaler" {
   autoscaling_policy {
     max_replicas = var.AUTOSCALER_MAX_REPLICAS
     min_replicas = var.AUTOSCALER_MIN_REPLICAS
+    cooldown_period = var.AUTOSCALER_COOLDOWN_PERIOD
 
     cpu_utilization {
       target = var.AUTOSCALER_CPU_UTILIZATION
@@ -75,7 +76,7 @@ resource "google_compute_health_check" "http_health_check" {
 resource "google_compute_backend_service" "webapp_backend_service" {
   name                  = var.LB_BACKEND_SERVICE_NAME
   protocol              = var.LB_BACKEND_SERVICE_PROTOCOL
-  load_balancing_scheme = var.LB_LOAD_BALANCING_SCHEME //TODO
+  load_balancing_scheme = var.LB_LOAD_BALANCING_SCHEME
   timeout_sec           = var.LB_BACKEND_SERVICE_TIMEOUT
   health_checks         = [google_compute_health_check.http_health_check.id]
   backend {

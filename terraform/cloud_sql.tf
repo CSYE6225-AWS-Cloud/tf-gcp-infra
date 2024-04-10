@@ -9,6 +9,7 @@ resource "google_sql_database_instance" "database_instance" {
   database_version    = var.DATABASE_VERSION
   depends_on          = [google_service_networking_connection.db_private_vpc_conn]
   deletion_protection = false
+  encryption_key_name = google_kms_crypto_key.sql_instance_key.id
 
   settings {
     tier              = var.DATABASE_TIER

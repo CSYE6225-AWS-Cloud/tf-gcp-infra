@@ -214,16 +214,28 @@ variable "DATABASE_PORT" {
   description = "Cloud SQL database port"
 }
 
-variable "LOGGER_SERVICE_ACCOUNTID" {
+variable "VM_SERVICE_ACCOUNTID" {
   type        = string
-  default     = "csye6225-logging"
-  description = "Service account id for logger service VM attach"
+  default     = "csye6225-vm-service-account"
+  description = "Service account id for VM attach"
 }
 
-variable "LOGGER_SERVICE_ACCOUNT_DISPLAY_NAME" {
+variable "FN_SERVICE_ACCOUNTID" {
   type        = string
-  default     = "CSYE6225 Application logging"
+  default     = "csye6225-fn-service-account"
+  description = "Service account id for cloud function attach"
+}
+
+variable "VM_SERVICE_ACCOUNT_DISPLAY_NAME" {
+  type        = string
+  default     = "CSYE6225 VM account"
   description = "Service account display name for logger service VM attach"
+}
+
+variable "FN_SERVICE_ACCOUNT_DISPLAY_NAME" {
+  type        = string
+  default     = "CSYE6225 Cloud Function account"
+  description = "Service account display name for cloud function"
 }
 
 variable "LOGGING_ADMIN_ROLE" {
@@ -347,7 +359,7 @@ variable "ROLE_CLOUD_FUNCTION_INVOKER" {
 
 variable "STORAGE_BUCKET_LOCATION" {
   type    = string
-  default = "US"
+  default = "US-EAST1"
 }
 
 variable "VERIFY_EMAIL_TOPIC_NAME" {
@@ -473,6 +485,7 @@ variable "LB_BACKEND_SERVICE_TIMEOUT" {
   type    = number
   default = 10
 }
+
 variable "LB_BACKEND_SERVICE_BALANCING_MODE" {
   type    = string
   default = "UTILIZATION"
@@ -491,4 +504,49 @@ variable "LB_GLOBAL_ADDRESS_NAME" {
 variable "LB_HEALTH_CHECK_RANGES" {
   type    = list(string)
   default = ["130.211.0.0/22", "35.191.0.0/16"]
+}
+
+variable "VM_DISK_KEY_NAME" {
+  type    = string
+  default = "vm-disk-key"
+}
+
+variable "SQL_INSTANCE_KEY_NAME" {
+  type    = string
+  default = "sql-instance-key"
+}
+
+variable "STORAGE_BUCKET_KEY_NAME" {
+  type    = string
+  default = "storage-bucket-key"
+}
+
+variable "KEY_ROTATION_PERIOD" {
+  type    = string
+  default = "2592000s"
+}
+
+variable "ROLE_KMS_ENCRYPT_DECRYPT" {
+  type    = string
+  default = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+}
+
+variable "ROLE_RUN_INVOKER" {
+  type    = string
+  default = "roles/run.invoker"
+}
+
+variable "SQL_ADMIN_SERVICE" {
+  type    = string
+  default = "sqladmin.googleapis.com"
+}
+
+variable "VM_DISK_DEVICE_NAME" {
+  type    = string
+  default = "vm-instance-disk"
+}
+
+variable "AUTOSCALER_COOLDOWN_PERIOD" {
+  type = number
+  default = 180
 }

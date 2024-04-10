@@ -16,9 +16,13 @@ resource "google_compute_region_instance_template" "webapp_instance_template" {
   tags         = [var.WEBAPP_CONST]
 
   disk {
+    device_name  = var.VM_DISK_DEVICE_NAME
     source_image = var.IMAGE
     disk_size_gb = var.BOOT_DISK_SIZE
     auto_delete  = true
+    disk_encryption_key {
+      kms_key_self_link = google_kms_crypto_key.vm_disk_key.id
+    }
   }
 
   network_interface {
@@ -26,7 +30,7 @@ resource "google_compute_region_instance_template" "webapp_instance_template" {
   }
 
   service_account {
-    email  = google_service_account.logger_account.email
+    email  = google_service_account.vm_instance_account.email
     scopes = var.VM_SERVICE_ACCOUNT_SCOPES
   }
 

@@ -53,7 +53,7 @@ resource "google_compute_firewall" "sql_access" {
     ports    = [var.DATABASE_PORT]
   }
 
-  source_tags        = [var.WEBAPP_CONST]
+  source_tags = [var.WEBAPP_CONST]
   destination_ranges = [
     google_sql_database_instance.database_instance.first_ip_address
   ]
